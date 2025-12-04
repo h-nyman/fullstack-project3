@@ -11,6 +11,7 @@ export default function SnippetForm({ pushSnippet }) {
             body: JSON.stringify(snippet)
         })
         pushSnippet(await response.json())
+        e.target.reset()
     }
     return <form onSubmit={onSubmit}>
         <label>Title:

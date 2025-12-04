@@ -25,16 +25,16 @@ export default function EditSnippetDialog({ activeSnippet, onClose }) {
     return <dialog ref={dialogRef} onClose={onClose}>
         <form onSubmit={onSubmit} method="dialog">
             <label>Title:
-                <input name="title" type="text"></input>
+                <input name="title" type="text" defaultValue={activeSnippet?.title}></input>
             </label>
             <label>Language:
-                <select name="language">
+                <select name="language" defaultValue={activeSnippet?.language}>
                     <option value="javascript">Javascript</option>
                     <option value="python">Python</option>
                 </select>
             </label>
             <label>Code:
-                <textarea name="code"></textarea>
+                <textarea name="code" defaultValue={activeSnippet?.code}></textarea>
             </label>
             <button type="submit">Edit Snippet</button>
             <button type="button" onClick={onClose}>Close</button>

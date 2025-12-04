@@ -1,11 +1,4 @@
-export default function SnippetCard({snippet, removeSnippet}){
-    async function deleteSnippet() {
-        const response = await fetch("/api/snippets/" + snippet._id, {
-            method: "DELETE"
-        })
-        const json = await response.json()
-        removeSnippet(json.id)
-    }
+export default function SnippetCard({snippet, deleteSnippet}){
     return <details>
         <summary>{snippet.title}</summary>
         <div>

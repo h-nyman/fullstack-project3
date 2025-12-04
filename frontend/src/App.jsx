@@ -3,6 +3,7 @@ import './App.css'
 import SnippetCard from './SnippetCard'
 import LanguageSelect from './LanguageSelect'
 import SnippetForm from './SnippetForm'
+import EditSnippetDialog from './EditSnippetDialog'
 
 async function fetchSnippets(language) {
   const response = await fetch('/api/snippets?lang=' + language)
@@ -12,26 +13,34 @@ async function fetchSnippets(language) {
 function App() {
   const [snippets, setSnippets] = useState([])
   const [language, setLanguage] = useState("")
+  const [editingSnippet, setEditingSnippet] = useState(null)
   useEffect(() => {
     fetchSnippets(language).then(setSnippets)
-  }, [setSnippets,language])
+  }, [setSnippets, language])
 
-function pushSnippet(s) {
-  setSnippets(snips => [s, ...snips])
-}
+  function pushSnippet(s) {
+    setSnippets(snips => [s, ...snips])
+  }
+
+  async function deleteSnippet(id) {
+    const response = await fetch("/api/snippets/" + id, {
+      method: "DELETE"
+    })
+    const json = await response.json()
+    setSnippets(snips => snips.filter(s => s._id !== json.id))
+  }
 
   return (
     <>
-    <SnippetForm pushSnippet={pushSnippet}></SnippetForm>
-    <LanguageSelect language={language} setLanguage={setLanguage}></LanguageSelect>
-    {snippets.map(s =>(
-      <SnippetCard 
-      key={s._id} 
-      snippet={s}
-      removeSnippet={id => setSnippets(snips => snips.filter(s => s._id !== id))}>
-
-      </SnippetCard>))}
-
+      <EditSnippetDialog editingSnippet={editingSnippet} />
+      <SnippetForm pushSnippet={pushSnippet}></SnippetForm>
+      <LanguageSelect language={language} setLanguage={setLanguage}></LanguageSelect>
+      {snippets.map(s => (
+        <SnippetCard
+          key={s._id}
+          snippet={s}
+          deleteSnippet={() => deleteSnippet(s._id)}>
+        </SnippetCard>))}
     </>
   )
 }

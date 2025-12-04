@@ -32,14 +32,16 @@ function App() {
 
   return (
     <>
-      <EditSnippetDialog editingSnippet={editingSnippet} />
+      <EditSnippetDialog activeSnippet={editingSnippet} onClose={() => setEditingSnippet(null)} />
       <SnippetForm pushSnippet={pushSnippet}></SnippetForm>
       <LanguageSelect language={language} setLanguage={setLanguage}></LanguageSelect>
       {snippets.map(s => (
         <SnippetCard
           key={s._id}
           snippet={s}
-          deleteSnippet={() => deleteSnippet(s._id)}>
+          deleteSnippet={() => deleteSnippet(s._id)}
+          startEditing={() => setEditingSnippet(s)}
+          >
         </SnippetCard>))}
     </>
   )

@@ -5,3 +5,4 @@ export default function LanguageSelect({ language, setLanguage}) {
         <option value="python">Python</option>
     </select>
 }
+// TODO: add support for dynamic languages

@@ -30,9 +30,23 @@ function App() {
     setSnippets(snips => snips.filter(s => s._id !== json.id))
   }
 
+  async function editSnippet(snippet) {
+    const response = await fetch("/api/snippets/" + snippet._id, {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(snippet)
+    })
+    const editedSnippet = await response.json()
+    setSnippets(snips => snips.map(s => s._id === editedSnippet._id
+      ? editedSnippet
+      : s))
+  }
+
   return (
     <>
-      <EditSnippetDialog activeSnippet={editingSnippet} onClose={() => setEditingSnippet(null)} />
+      <EditSnippetDialog activeSnippet={editingSnippet} onClose={() => setEditingSnippet(null)} editSnippet={editSnippet} />
       <SnippetForm pushSnippet={pushSnippet}></SnippetForm>
       <LanguageSelect language={language} setLanguage={setLanguage}></LanguageSelect>
       {snippets.map(s => (
@@ -41,7 +55,7 @@ function App() {
           snippet={s}
           deleteSnippet={() => deleteSnippet(s._id)}
           startEditing={() => setEditingSnippet(s)}
-          >
+        >
         </SnippetCard>))}
     </>
   )

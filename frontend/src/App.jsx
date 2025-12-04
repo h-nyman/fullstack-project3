@@ -24,7 +24,13 @@ function pushSnippet(s) {
     <>
     <SnippetForm pushSnippet={pushSnippet}></SnippetForm>
     <LanguageSelect language={language} setLanguage={setLanguage}></LanguageSelect>
-    {snippets.map(s =>(<SnippetCard key={s._id} snippet={s}></SnippetCard>))}
+    {snippets.map(s =>(
+      <SnippetCard 
+      key={s._id} 
+      snippet={s}
+      removeSnippet={id => setSnippets(snips => snips.filter(s => s._id !== id))}>
+
+      </SnippetCard>))}
 
     </>
   )

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import SnippetCard from './SnippetCard'
 import LanguageSelect from './LanguageSelect'
@@ -11,26 +11,22 @@ function App() {
   const [language, setLanguage] = useState("")
   const { data: snippets, loading: snippetsLoading, error: snippetsError, refetch } = useFetch('/api/snippets?lang=' + language);
   const [editingSnippet, setEditingSnippet] = useState(null)
-  const { loading: deleteLoading, error: deleteError, refetch: deleteSnipFetch } = useLazyFetch("/api/snippets/id", {
-    method: "DELETE"
-  });
-
-
+  const { loading: deleteLoading, error: deleteError, refetch: deleteSnipFetch } = useLazyFetch();
+  const { loading: editLoading, error: editError, refetch: editSnipFetch } = useLazyFetch();
 
   async function deleteSnippet(id) {
-    await deleteSnipFetch("/api/snippets/" + id)
+    await deleteSnipFetch("/api/snippets/" + id, { method: "DELETE" })
     refetch()
   }
 
   async function editSnippet(snippet) {
-    const response = await fetch("/api/snippets/" + snippet._id, {
+    await editSnipFetch("/api/snippets/" + snippet._id, {
       method: "PUT",
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(snippet)
     })
-    const editedSnippet = await response.json()
     refetch()
   }
 

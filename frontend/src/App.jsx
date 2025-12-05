@@ -5,22 +5,20 @@ import LanguageSelect from './LanguageSelect'
 import SnippetForm from './SnippetForm'
 import EditSnippetDialog from './EditSnippetDialog'
 import { useFetch } from './useFetch'
-
-async function fetchSnippets(language) {
-  const response = await fetch('/api/snippets?lang=' + language)
-  return response.json()
-}
+import { useLazyFetch } from './useLazyFetch'
 
 function App() {
   const [language, setLanguage] = useState("")
   const { data: snippets, loading: snippetsLoading, error: snippetsError, refetch } = useFetch('/api/snippets?lang=' + language);
   const [editingSnippet, setEditingSnippet] = useState(null)
+  const { loading: deleteLoading, error: deleteError, refetch: deleteSnipFetch } = useLazyFetch("/api/snippets/id", {
+    method: "DELETE"
+  });
+
+
 
   async function deleteSnippet(id) {
-    const response = await fetch("/api/snippets/" + id, {
-      method: "DELETE"
-    })
-    const json = await response.json()
+    await deleteSnipFetch("/api/snippets/" + id)
     refetch()
   }
 

@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-export function useLazyFetch(url, options = {}) {
+export function useLazyFetch(url, options) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

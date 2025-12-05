@@ -1,16 +1,9 @@
-export default function SnippetForm({ pushSnippet }) {
+export default function SnippetForm({ createSnippet }) {
     async function onSubmit(e) {
         e.preventDefault()
         const formData = new FormData(e.target)
         const snippet = Object.fromEntries(formData.entries())
-        const response = await fetch("/api/snippets", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(snippet)
-        })
-        pushSnippet(await response.json())
+        createSnippet(snippet)
         e.target.reset()
     }
     return <form onSubmit={onSubmit}>

@@ -4,6 +4,7 @@ import SnippetCard from './SnippetCard'
 import LanguageSelect from './LanguageSelect'
 import SnippetForm from './SnippetForm'
 import EditSnippetDialog from './EditSnippetDialog'
+import { useFetch } from './useFetch'
 
 async function fetchSnippets(language) {
   const response = await fetch('/api/snippets?lang=' + language)
@@ -11,23 +12,16 @@ async function fetchSnippets(language) {
 }
 
 function App() {
-  const [snippets, setSnippets] = useState([])
   const [language, setLanguage] = useState("")
+  const { data: snippets, loading: snippetsLoading, error: snippetsError, refetch } = useFetch('/api/snippets?lang=' + language);
   const [editingSnippet, setEditingSnippet] = useState(null)
-  useEffect(() => {
-    fetchSnippets(language).then(setSnippets)
-  }, [setSnippets, language])
-
-  function pushSnippet(s) {
-    setSnippets(snips => [s, ...snips])
-  }
 
   async function deleteSnippet(id) {
     const response = await fetch("/api/snippets/" + id, {
       method: "DELETE"
     })
     const json = await response.json()
-    setSnippets(snips => snips.filter(s => s._id !== json.id))
+    refetch()
   }
 
   async function editSnippet(snippet) {
@@ -39,18 +33,16 @@ function App() {
       body: JSON.stringify(snippet)
     })
     const editedSnippet = await response.json()
-    setSnippets(snips => snips.map(s => s._id === editedSnippet._id
-      ? editedSnippet
-      : s))
+    refetch()
   }
 
   return (
     <>
-    <h1>Code Snippet Library</h1>
+      <h1>Code Snippet Library</h1>
       <EditSnippetDialog activeSnippet={editingSnippet} onClose={() => setEditingSnippet(null)} editSnippet={editSnippet} />
-      <SnippetForm pushSnippet={pushSnippet}></SnippetForm>
+      <SnippetForm pushSnippet={undefined}></SnippetForm>
       <LanguageSelect language={language} setLanguage={setLanguage}></LanguageSelect>
-      {snippets.map(s => (
+      {snippets && snippets.map(s => (
         <SnippetCard
           key={s._id}
           snippet={s}

@@ -46,6 +46,7 @@ function App() {
 
   return (
     <>
+    <h1>Code Snippet Library</h1>
       <EditSnippetDialog activeSnippet={editingSnippet} onClose={() => setEditingSnippet(null)} editSnippet={editSnippet} />
       <SnippetForm pushSnippet={pushSnippet}></SnippetForm>
       <LanguageSelect language={language} setLanguage={setLanguage}></LanguageSelect>

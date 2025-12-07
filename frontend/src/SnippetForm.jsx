@@ -6,19 +6,27 @@ export default function SnippetForm({ createSnippet }) {
         createSnippet(snippet)
         e.target.reset()
     }
-    return <form onSubmit={onSubmit}>
-        <label>Title:
-            <input name="title" type="text"></input>
-        </label>
-        <label>Language:
-            <select name="language">
-                <option value="javascript">Javascript</option>
-                <option value="python">Python</option>
-            </select>
-        </label>
-        <label>Code:
-            <textarea name="code"></textarea>
-        </label>
-        <button type="submit">Create Snippet</button>
-    </form>
+    return (
+        <form onSubmit={onSubmit} className="snippet-form">
+            <div className="form-field">
+                <label htmlFor="title">Title:</label>
+                <input name="title" id="title" type="text" />
+            </div>
+
+            <div className="form-field">
+                <label htmlFor="language">Language:</label>
+                <select name="language" id="language">
+                    <option value="javascript">Javascript</option>
+                    <option value="python">Python</option>
+                </select>
+            </div>
+
+            <div className="form-field">
+                <label htmlFor="code">Code:</label>
+                <textarea name="code" id="code"></textarea>
+            </div>
+
+            <button type="submit">Create Snippet</button>
+        </form>
+    );
 }

@@ -2,7 +2,6 @@ import { useState } from 'react'
 import './App.css'
 import SnippetCard from './SnippetCard'
 import LanguageSelect from './LanguageSelect'
-import SnippetForm from './SnippetForm'
 import EditSnippetDialog from './EditSnippetDialog'
 import { useFetch } from './useFetch'
 import { useLazyFetch } from './useLazyFetch'
@@ -13,8 +12,6 @@ export default function SnippetListView() {
   const [editingSnippet, setEditingSnippet] = useState(null)
   const { loading: deleteLoading, error: deleteError, refetch: deleteSnipFetch } = useLazyFetch();
   const { loading: editLoading, error: editError, refetch: editSnipFetch } = useLazyFetch();
-  const { loading: createLoading, error: createError, refetch: createSnipFetch } = useLazyFetch();
-
 
   async function deleteSnippet(id) {
     await deleteSnipFetch("/api/snippets/" + id, { method: "DELETE" })
@@ -32,29 +29,18 @@ export default function SnippetListView() {
     refetch()
   }
 
-  async function createSnippet(snippet) {
-    await createSnipFetch("/api/snippets", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(snippet)
-    })
-    refetch()
-  }
-
   return (
     <>
       <div className="card">
         <h1>Code Snippet Library</h1>
 
-        {(snippetsLoading || deleteLoading || editLoading || createLoading) && (
+        {(snippetsLoading || deleteLoading || editLoading) && (
           <p className="loading">Loading...</p>
         )}
 
-        {(snippetsError || deleteError || editError || createError) && (
+        {(snippetsError || deleteError || editError) && (
           <p className="error">
-            {snippetsError || deleteError || editError || createError}
+            {snippetsError || deleteError || editError}
           </p>
         )}
 
@@ -64,7 +50,6 @@ export default function SnippetListView() {
           editSnippet={editSnippet}
         />
 
-        <SnippetForm createSnippet={createSnippet} />
         <LanguageSelect language={language} setLanguage={setLanguage} />
       </div>
 

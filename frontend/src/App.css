@@ -84,3 +84,7 @@
 .delete-button:hover {
   background-color: var(--red-6);
 }
+
+.error {
+    color: var(--red-8);
+}

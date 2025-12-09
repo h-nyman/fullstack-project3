@@ -1,3 +1,5 @@
+import languageList from "./languageList"
+
 export default function SnippetForm({ createSnippet }) {
     async function onSubmit(e) {
         e.preventDefault()
@@ -16,8 +18,7 @@ export default function SnippetForm({ createSnippet }) {
             <div className="form-field">
                 <label htmlFor="language">Language:</label>
                 <select name="language" id="language">
-                    <option value="javascript">Javascript</option>
-                    <option value="python">Python</option>
+                    {languageList.map(l => <option key={l.id} value={l.id}>{l.label}</option>)}
                 </select>
             </div>
 

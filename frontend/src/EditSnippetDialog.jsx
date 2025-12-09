@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react"
+import languageList from "./languageList"
 
 export default function EditSnippetDialog({ activeSnippet, onClose, editSnippet }) {
     const dialogRef = useRef(null)
@@ -17,23 +18,27 @@ export default function EditSnippetDialog({ activeSnippet, onClose, editSnippet 
         editSnippet(snippet)
         onClose()
     }
-    return <dialog ref={dialogRef} onClose={onClose}>
-        <form onSubmit={onSubmit} method="dialog" key={activeSnippet?._id ?? 'null'}>
+    return <dialog ref={dialogRef} onClose={onClose} className="edit-dialog">
+        <form onSubmit={onSubmit} method="dialog" key={activeSnippet?._id ?? 'null'} className="edit-form">
             <input type="hidden" name="_id" value={activeSnippet?._id ?? 'null'}></input>
-            <label>Title:
-                <input name="title" type="text" defaultValue={activeSnippet?.title}></input>
-            </label>
-            <label>Language:
+            <div className="form-field">
+                <label>Title:</label>
+                <input name="title" type="text" defaultValue={activeSnippet?.title} />
+            </div>
+            <div className="form-field">
+                <label>Language:</label>
                 <select name="language" defaultValue={activeSnippet?.language}>
-                    <option value="javascript">Javascript</option>
-                    <option value="python">Python</option>
+                    {languageList.map(l => <option key={l.id} value={l.id}>{l.label}</option>)}
                 </select>
-            </label>
-            <label>Code:
-                <textarea name="code" defaultValue={activeSnippet?.code}></textarea>
-            </label>
-            <button type="submit">Save</button>
-            <button type="button" onClick={onClose}>Close</button>
+            </div>
+            <div className="form-field">
+                <label>Code:</label>
+                <textarea name="code" defaultValue={activeSnippet?.code} />
+            </div>
+            <div className="dialog-buttons">
+                <button type="submit">Save</button>
+                <button type="button" onClick={onClose}>Close</button>
+            </div>
         </form>
     </dialog>
 }

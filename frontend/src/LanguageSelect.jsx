@@ -1,8 +1,11 @@
-export default function LanguageSelect({ language, setLanguage}) {
-    return <select value={language} onChange={e => setLanguage(e.target.value)}>
-        <option value="">All</option>
-        <option value="javascript">Javascript</option>
-        <option value="python">Python</option>
-    </select>
+import languageList from "./languageList"
+
+export default function LanguageSelect({ language, setLanguage }) {
+    return <label>
+        <span>Language: </span>
+        <select value={language} onChange={e => setLanguage(e.target.value)}>
+            <option value="">All</option>
+            {languageList.map(l => <option key={l.id} value={l.id}>{l.label}</option>)}
+        </select>
+    </label>
 }
-// TODO: add support for dynamic languages

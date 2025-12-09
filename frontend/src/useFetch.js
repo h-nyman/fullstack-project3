@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 
 export function useFetch(url, options) {
+  const API = import.meta.env.VITE_API_URL ?? "";
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -15,7 +16,7 @@ export function useFetch(url, options) {
     setError(null);
 
     try {
-      const response = await fetch(requestUrl, requestOptions);
+      const response = await fetch(API + requestUrl, requestOptions);
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
       const result = await response.json();
       setData(result);

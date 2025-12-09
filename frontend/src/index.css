@@ -17,7 +17,9 @@
 }
 
 /* 1. Use a more-intuitive box-sizing model */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -43,18 +45,31 @@ body {
 }
 
 /* 6. Improve media defaults */
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
 /* 7. Inherit fonts for form controls */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
 /* 8. Avoid text overflows */
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 
@@ -62,14 +77,21 @@ p, h1, h2, h3, h4, h5, h6 {
 p {
   text-wrap: pretty;
 }
-h1, h2, h3, h4, h5, h6 {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-wrap: balance;
 }
 
 /*
   10. Create a root stacking context
 */
-#root, #__next {
+#root,
+#__next {
   isolation: isolate;
 }
 
@@ -77,9 +99,6 @@ a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
 }
 
 h1 {
@@ -101,14 +120,9 @@ button:hover {
   background-color: #577568;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
+:root {
+  color: #213547;
+  background-color: #ffffff;
 }
 
 :where(html) {
@@ -369,7 +383,9 @@ select,
 
 select {
   flex: 1;
+  position:relative;
 }
+
 select {
   border: 2px solid #dddddd;
   background: #eeeeee;
@@ -381,16 +397,20 @@ select:hover,
 select:focus {
   background: #dddddd;
 }
+
 select::picker-icon {
   color: #999999;
   transition: 0.4s rotate;
 }
+
 select:open::picker-icon {
   rotate: 180deg;
 }
+
 ::picker(select) {
   border: none;
 }
+
 option {
   display: flex;
   justify-content: flex-start;
@@ -401,6 +421,7 @@ option {
   padding: 10px;
   transition: 0.4s;
 }
+
 option:first-of-type {
   border-radius: 8px 8px 0 0;
 }
@@ -416,6 +437,7 @@ option:last-of-type {
 option:not(option:last-of-type) {
   border-bottom: none;
 }
+
 option:nth-of-type(odd) {
   background: white;
 }
@@ -428,24 +450,28 @@ option:focus {
 option:checked {
   font-weight: bold;
 }
+
 option::checkmark {
   order: 1;
   margin-left: auto;
   content: "✓";
 }
+
 ::picker(select) {
   opacity: 0;
   transition: all 0.4s allow-discrete;
 }
+
 ::picker(select):popover-open {
   opacity: 1;
 }
+
 @starting-style {
   ::picker(select):popover-open {
     opacity: 0;
   }
 }
+
 ::picker(select) {
   top: calc(anchor(bottom) + 1px);
-  left: anchor(10%);
 }

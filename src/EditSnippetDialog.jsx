@@ -31,7 +31,7 @@ export default function EditSnippetDialog({ activeSnippet, onClose, editSnippet 
             <input type="hidden" name="_id" value={activeSnippet?._id ?? 'null'}></input>
             <div className="form-field">
                 <label>Title:</label>
-                <input name="title" type="text" defaultValue={activeSnippet?.title} />
+                <input name="title" type="text" defaultValue={activeSnippet?.title} required />
             </div>
             <div className="form-field">
                 <label>Language:</label>

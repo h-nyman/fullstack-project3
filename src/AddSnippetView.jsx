@@ -7,14 +7,16 @@ export default function AddSnippetView() {
   const { loading: createLoading, error: createError, refetch: createSnipFetch } = useLazyFetch();
   const navigate = useNavigate();
   async function createSnippet(snippet) {
-    await createSnipFetch("/api/snippets", {
+    const result = await createSnipFetch("/api/snippets", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(snippet)
     })
-    navigate('/')
+    if (result) {
+      navigate('/')
+    }
   }
 
   return (

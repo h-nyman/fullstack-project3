@@ -17,17 +17,18 @@ export function useLazyFetch(url, options) {
 
     setLoading(true);
     setError(null);
-
+    let result = null
     try {
       const response = await fetch(API + requestUrl, requestOptions);
       if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-      const result = await response.json();
+      result = await response.json();
       setData(result);
     } catch (err) {
       setError(err.message || 'Something went wrong');
     } finally {
       setLoading(false);
     }
+    return result
   }, [url, options]);
 
   return { data, loading, error, refetch };

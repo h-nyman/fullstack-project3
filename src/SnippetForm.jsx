@@ -6,7 +6,6 @@ export default function SnippetForm({ createSnippet }) {
         const formData = new FormData(e.target)
         const snippet = Object.fromEntries(formData.entries())
         createSnippet(snippet)
-        e.target.reset()
     }
     return (
         <form onSubmit={onSubmit} className="snippet-form">

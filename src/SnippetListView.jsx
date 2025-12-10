@@ -19,7 +19,7 @@ export default function SnippetListView() {
     }
 
     async function editSnippet(snippet) {
-        await editSnipFetch("/api/snippets/" + snippet._id, {
+        const result = await editSnipFetch("/api/snippets/" + snippet._id, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json'
@@ -27,6 +27,10 @@ export default function SnippetListView() {
             body: JSON.stringify(snippet)
         })
         refetch()
+        if (!result) {
+            return false
+        }
+        return true
     }
 
     return (

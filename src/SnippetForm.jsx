@@ -11,7 +11,7 @@ export default function SnippetForm({ createSnippet }) {
         <form onSubmit={onSubmit} className="snippet-form">
             <div className="form-field">
                 <label htmlFor="title">Title:</label>
-                <input name="title" id="title" type="text" />
+                <input name="title" id="title" type="text" required/>
             </div>
 
             <div className="form-field">
@@ -23,7 +23,7 @@ export default function SnippetForm({ createSnippet }) {
 
             <div className="form-field">
                 <label htmlFor="code">Code:</label>
-                <textarea name="code" id="code"></textarea>
+                <textarea name="code" id="code" required></textarea>
             </div>
 
             <button type="submit">Create Snippet</button>
